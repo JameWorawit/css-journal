@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mystyle.css">
+    <title>Unsplash-grid-css</title>
+</head>
+
+<body>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .grid-container {
+            padding: 30px;
+           column-count: 3;
+            column-width: 300px;  
+            
+        }
+
+        .grid-item {
+            width: 100%;
+            min-width: 300px;
+            margin-bottom: 10px;
+            border-radius: 3rem;
+            background: #111010;
+        }
+    </style>
+
+    <div class="grid-container">
+        <!-- เพิ่ม grid-item ได้เรื่อยๆ -->
+    </div>
+
+    <script>
+        const accessKey = "YOUR_ACCESS_KEY";
+        const url = `https://api.unsplash.com/photos/random/?client_id=${accessKey}&count=20`;
+
+        fetch(url)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("HTTP error " + res.status);
+                }
+                return res.json();
+            })
+            .then(data => {
+                const girdContainer = document.querySelector('.grid-container');
+                data.forEach(item => {
+                    const img = document.createElement('img');
+                    img.src = item.urls.small;
+                    img.alt = item.alt_description;
+                    img.classList.add('grid-item');
+                    girdContainer.appendChild(img);
+                    console.log(item)
+                });
+                console.log(data)
+            })
+
+
+    </script>
+</body>
+
+</html>
